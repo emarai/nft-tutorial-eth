@@ -16,6 +16,16 @@ contract MyToken is ERC721, Ownable {
         _safeMint(to, tokenId);
     }
 
+    function safeMintBatch(
+        address to,
+        uint256 from,
+        uint256 until
+    ) public onlyOwner {
+        for (uint256 i = from; i < until; i++) {
+            _safeMint(to, i);
+        }
+    }
+
     function _baseURI() internal view virtual override returns (string memory) {
         return baseUri;
     }

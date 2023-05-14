@@ -27,6 +27,14 @@ describe("MyToken", function () {
       expect(ownerOfToken).to.equal(otherAccount.address);
     });
 
+    it("Should safeMint 1000", async function () {
+      const { myToken, owner, otherAccount } = await loadFixture(
+        deployContract
+      );
+
+      await myToken.safeMintBatch(otherAccount.address, 0, 1000);
+    });
+
     it("Should set baseUri", async function () {
       const { myToken, owner, otherAccount } = await loadFixture(
         deployContract
