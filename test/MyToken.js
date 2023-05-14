@@ -16,27 +16,35 @@ describe("MyToken", function () {
   }
 
   describe("Custom functions", function () {
-    it("Should safeMint", async function () {
+    it("Should mint", async function () {
       const { myToken, owner, otherAccount } = await loadFixture(
         deployContract
       );
 
-      await myToken.safeMint(otherAccount.address, 1);
+      let tx = await myToken.mint(otherAccount.address, 1);
 
-      const ownerOfToken = await myToken.ownerOf(1);
+      const ownerOfToken = await myToken.ownerOf(0);
       expect(ownerOfToken).to.equal(otherAccount.address);
+    });
+
+    it("Should mint 1000", async function () {
+      const { myToken, owner, otherAccount } = await loadFixture(
+        deployContract
+      );
+
+      myToken.mint(otherAccount.address, 1000);
     });
 
     it("Should set baseUri", async function () {
       const { myToken, owner, otherAccount } = await loadFixture(
         deployContract
       );
-      await myToken.safeMint(otherAccount.address, 1);
+      await myToken.mint(otherAccount.address, 1);
 
       await myToken.setBaseURI("ipfs://random/");
 
-      const tokenUri = await myToken.tokenURI(1);
-      expect(tokenUri).to.be.equal("ipfs://random/1.json");
+      const tokenUri = await myToken.tokenURI(0);
+      expect(tokenUri).to.be.equal("ipfs://random/0.json");
     });
   });
 });
